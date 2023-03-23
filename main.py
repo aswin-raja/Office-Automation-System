@@ -1,16 +1,10 @@
 import mysql.connector
 import jinja2
+import pdfkit
+from fpdf import FPDF
+from flaskext.mysql import MySQL
 from werkzeug.wrappers import Request, Response
 from flask import Flask, request, render_template
-
-
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="aswin2002",
-    database="bonafide"
-)
-
 app = Flask(__name__)
 
 
@@ -19,7 +13,7 @@ def hello_world():
     return render_template("login.html")
 
 
-admindata = {'stock@ucen': 'stock@admin',
+admindata = {'stock@ucen': '123',
             'scholarship@ucen': 'scholarship@admin', }
 
 
@@ -36,16 +30,24 @@ def login():
                                    info='Invalid Password !')
             
     elif admindata[name] == admindata['stock@ucen']:
-            return render_template('stock.html')
+            return render_template('bonafide.html')
          
     else:
        if admindata[name] == admindata['scholarship@ucen']:
             return render_template('scholarship.html')
+        
+mysql = MySQL()
+ 
 
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'bonafide'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
 
 @app.route('/')
 def upload_form():
-	return render_template('download.html')
+	return render_template('bonafide.html')
 
 @app.route('/download/report/pdf')
 def download_report():
@@ -55,7 +57,7 @@ def download_report():
 		conn = mysql.connect()
 		cursor = conn.cursor(mysql.cursors.DictCursor)
 		
-		cursor.execute("SELECT emp_id, emp_first_name, emp_last_name, emp_designation FROM employee")
+		cursor.execute("SELECT regnumber, name, fathername, year FROM studentdata")
 		result = cursor.fetchall()
 		
 		pdf = FPDF()
@@ -76,22 +78,20 @@ def download_report():
 		th = pdf.font_size
 		
 		for row in result:
-			pdf.cell(col_width, th, str(row['emp_id']), border=1)
-			pdf.cell(col_width, th, row['emp_first_name'], border=1)
-			pdf.cell(col_width, th, row['emp_last_name'], border=1)
-			pdf.cell(col_width, th, row['emp_designation'], border=1)
+			pdf.cell(col_width, th, (row['regnumber']), border=1)
+			pdf.cell(col_width, th, row['name'], border=1)
+			pdf.cell(col_width, th, row['fathername'], border=1)
+			pdf.cell(col_width, th, row['year'], border=1)
 			pdf.ln(th)
 		
 		pdf.ln(10)
 		
 		pdf.set_font('Times','',10.0) 
 		pdf.cell(page_width, 0.0, '- end of report -', align='C')
-		
-		return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=employee_report.pdf'})
+		return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment; filename=employee_report.pdf'})
 	except Exception as e:
 		print(e)
 	finally:
-		cursor.close() 
 		conn.close()
 
 
