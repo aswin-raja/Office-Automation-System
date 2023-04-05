@@ -2,10 +2,55 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Home</title>
+    <title>stock management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    body{
+      background-color:grey;
+    }
+    .flex{
+      display:flex;
+      padding-top:80px;
+      padding-left:100px;
+    }
+    .card{
+      margin-right:150px;
+    }
+    button{
+      tex-align:center;
+      margin-top:70px;
+      margin-left:45%; 
+      height:50px;   
+    }
+    h2{
+      text-align:center;  
+      margin-top:10px;
+    }
+  </style>
   </head>
   <body>
-    stock management
-    <a  class="btn" href="{{url_for('hello_world')}}">Logout</a>
+    <h2>STOCK MANAGEMENT ADMIN PANEL</h2>
+   <div class="flex">
+    <div class="card text-center"  style="width: 18rem;">
+      <img src="admin.png" class="card-img-top" alt="admin_icon">
+      <div class="card-body">
+        <a href="consumable.html" class="btn btn-primary">CONSUMABLE STOCKS</a>
+      </div>
+    </div>
+    <div class="card text-center"  style="width: 18rem;">
+      <img src="admin.png" class="card-img-top" alt="admin_icon">
+      <div class="card-body">
+        <a href="nonconsumable.html" class="btn btn-primary">NON-CONSUMABLE STOCKS</a>
+      </div>
+    </div>
+    <div class="card text-center"  style="width: 18rem;">
+      <img src= "" class="card-img-top" alt="admin_icon">
+      <div class="card-body">
+        <a href="{{url_for('stockadmin')}}" class="btn btn-primary">ADD STOCK</a>
+      </div>
+    </div>
+  </div>
+  </body>
+  <button type="button" class="btn btn-primary"><a  class="btn" href="{{url_for('hello_world')}}">Logout</a></button>
   </body>
 </html>
