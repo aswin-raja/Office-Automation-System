@@ -14,7 +14,12 @@ def hello_world():
 @app.route('/stockadmin')
 def stockadmin():
     return render_template("stockadmin.html")
-
+@app.route('/consumable')
+def consumable():
+    return render_template("consumable.html")
+@app.route('/nonconsumable')
+def nonconsumable():
+    return render_template("nonconsumable.html")
 
 admindata = {'stock@ucen': '123',
             'scholarship@ucen': '123', }

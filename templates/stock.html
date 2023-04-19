@@ -32,19 +32,19 @@
     <h2>STOCK MANAGEMENT ADMIN PANEL</h2>
    <div class="flex">
     <div class="card text-center"  style="width: 18rem;">
-      <img src="admin.png" class="card-img-top" alt="admin_icon">
+      <img src="{{url_for('static', filename='admin.png')}}" class="card-img-top" alt="admin_icon">
       <div class="card-body">
-        <a href="consumable.html" class="btn btn-primary">CONSUMABLE STOCKS</a>
+        <a href="{{url_for('consumable')}}" class="btn btn-primary">CONSUMABLE STOCKS</a>
       </div>
     </div>
     <div class="card text-center"  style="width: 18rem;">
-      <img src="admin.png" class="card-img-top" alt="admin_icon">
+      <img src="{{url_for('static', filename='admin.png')}}" class="card-img-top" alt="admin_icon">
       <div class="card-body">
-        <a href="nonconsumable.html" class="btn btn-primary">NON-CONSUMABLE STOCKS</a>
+        <a href="{{url_for('nonconsumable')}}"class="btn btn-primary">NON-CONSUMABLE STOCKS</a>
       </div>
     </div>
     <div class="card text-center"  style="width: 18rem;">
-      <img src= "" class="card-img-top" alt="admin_icon">
+      <img src="{{url_for('static', filename='admin.png')}}"  class="card-img-top" alt="admin_icon">
       <div class="card-body">
         <a href="{{url_for('stockadmin')}}" class="btn btn-primary">ADD STOCK</a>
       </div>
