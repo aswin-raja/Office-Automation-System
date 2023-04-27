@@ -102,7 +102,7 @@ class year(db.Model):
     PROGRAMME   = db.Column(db.String(100)) 
     CAMPCODE    = db.Column(db.String(100)) 
     ADMISSION_DATE_YYYY_MM_DD   = db.Column(db.String(100))
-    NO_OF_ARREAR = db.Column(db.Integer) 
+    NO_OF_ARREARS = db.Column(db.Integer) 
     PLACEMENT_STATUS = db.Column(db.String(100))
 
 
@@ -228,13 +228,15 @@ def update():
   
   
 #update arrear
-@app.route('/arrearupdation', methods=['GET', 'POST'])
-def arrearupdation():
+@app.route('/updatearrear', methods=['GET', 'POST'])
+def updatearrear():
+    regnum=request.form['regnum']
     if request.method == 'POST':
-        year.NO_OF_ARREAR = request.form['arrear']
+        year.regnum.NO_OF_ARREARS = request.form['arrear']
         db.session.commit()
         flash('Year record updated successfully!', 'success')
-    return render_template('update.html', year=year)
+    return render_template('update.html', post=post)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
