@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>search</title>
+  </head>
+
+  <body>
+    <div class="container">
+
+        <div class="row">
+        
+        <div class="col-md-4">
+        
+        <form action="/search" method="post">
+        
+        
+        <div class="form-group">
+        <label for="attendance">Enter Register Number</label>
+        <input type="text" class="form-control" name="roll"  placeholder="register number">
+        </div>
+        <br>
+        
+          <button type="submit" class="btn btn-danger btn-sm btn-block">Search</button>
+        </form>
+        <br>
+        <br>
+    
+        <hr style="border: 5px solid black;">
+        
+        </div>
+        
+        
+        <div class="col-md-8">
+        {% if search %}
+        <br>
+        <h3>Your Details</h3>
+         <hr>
+         <li>Roll No : {{search.APPL_NO}}</li>
+        
+         <li>Name    : {{search.NAME}}</li>
+        <br><br>
+        {% else %}
+        No such results
+        {% endif %}
+        
+        </div>
+        
+        </tbody>
+      </table>
+  </body>
+  </html>

@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <style>
     body{
-      background-color:grey;
+      background-color:white;
     }
     .flex{
       display:flex;
@@ -29,16 +29,16 @@
   </style>
   </head>
   <body>
-    <h2>STOCK MANAGEMENT ADMIN PANEL</h2>
+    <h2>STOCK MANAGEMENT</h2>
    <div class="flex">
     <div class="card text-center"  style="width: 18rem;">
-      <img src="{{url_for('static', filename='admin.png')}}" class="card-img-top" alt="admin_icon">
+      <img src="{{url_for('static', filename='view.png')}}" class="card-img-top" alt="admin_icon">
       <div class="card-body">
         <a href="{{url_for('consumable')}}" class="btn btn-primary">CONSUMABLE STOCKS</a>
       </div>
     </div>
     <div class="card text-center"  style="width: 18rem;">
-      <img src="{{url_for('static', filename='admin.png')}}" class="card-img-top" alt="admin_icon">
+      <img src="{{url_for('static', filename='view.png')}}" class="card-img-top" alt="admin_icon">
       <div class="card-body">
         <a href="{{url_for('nonconsumable')}}"class="btn btn-primary">NON-CONSUMABLE STOCKS</a>
       </div>
@@ -46,11 +46,12 @@
     <div class="card text-center"  style="width: 18rem;">
       <img src="{{url_for('static', filename='admin.png')}}"  class="card-img-top" alt="admin_icon">
       <div class="card-body">
-        <a href="{{url_for('stockadmin')}}" class="btn btn-primary">ADD STOCK</a>
+        <a href="{{url_for('stockadmin')}}" class="btn btn-primary">ADMIN PANEL</a>
       </div>
     </div>
   </div>
   </body>
-  <button type="button" class="btn btn-primary"><a  class="btn" href="{{url_for('hello_world')}}">Logout</a></button>
-  </body>
+  <button type="button" class="btn btn-primary"><a  class="btn" href="{{url_for('home')}}">Logout</a></button>
+
+</body>
 </html>

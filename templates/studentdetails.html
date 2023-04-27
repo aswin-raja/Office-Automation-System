@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>stock management</title>
+    <title>studentdetails</title>
   </head>
   <body>
     <table class="table">
@@ -17,8 +17,6 @@
             <th scope="col">EMAIL</th>
             <th scope="col">NUMBER</th>
             <th scope="col">ADDRESS</th>
-            <th scope="col">EDIT</th>
-            <th scope="col">DELETE</th>
       
           </tr>
         </thead>
@@ -33,8 +31,6 @@
             <td>{{post.email}}</td>
             <td>{{post.number}}</td>
             <td>{{post.address}}</td>
-          <td><a href="/edit/{{post.id}}"><button class="btn btn-primary">Edit </button> </a> </td>
-          <td><a href="/delete/{{post.id}}"><button onclick="return confirm('Are you sure to Delete data');" class="btn btn-danger">Delete </button> </a> </td>
           </tr>
       {% endfor %}
         

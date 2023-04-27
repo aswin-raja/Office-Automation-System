@@ -68,14 +68,14 @@
       <div class="col">
         <div class="login">
             <h1 class="text-center">Faculty login</h1>
-            <form>
+            <form action="/faculty_login" method="POST">
                 <div class="form-group">
                    <label class="form-label" for="name">UserName</label>
-                   <input class="form-control" type="text" id="name" placeholder="enter your username">
+                   <input class="form-control" type="text" id="name" name="facultyusername" placeholder="enter your username">
                 </div>
                 <div class="form-group">
                     <label for="password">password</label>
-                    <input class="form-control" type="password" id="password" placeholder="enter your password">
+                    <input class="form-control" type="password" id="password" name="facultypassword" placeholder="enter your password">
                  </div>
                  <div class="form-group form-check">
                     <label class="form-check-label" for="check">Remember me</label>
@@ -88,7 +88,7 @@
       <div class="col">
         <div class="login">
             <h1 class="text-center">Admin login</h1>
-            <form action="/form_login" method="POST">
+            <form action="/admin_login" method="POST">
                 <div class="form-group">
                    <label class="form-label" for="name">UserName</label>
                    <input class="form-control" type="text" id="name" name="adminusername" placeholder="enter your username">
@@ -108,14 +108,14 @@
       <div class="col">
         <div class="login">
             <h1 class="text-center">Student login</h1>
-            <form>
+            <form action="/student_login" method="POST">
                 <div class="form-group">
                    <label class="form-label" for="name">UserName</label>
-                   <input class="form-control" type="text" id="name" placeholder="enter your username">
+                   <input class="form-control" type="text" id="name" name="studentusername" placeholder="enter your username">
                 </div>
                 <div class="form-group">
                     <label for="password">password</label>
-                    <input class="form-control" type="password" id="password" placeholder="enter your password">
+                    <input class="form-control" type="password" id="password" name="studentpassword" placeholder="enter your password">
                  </div>
                  <div class="form-group form-check">
                     <label class="form-check-label" for="check">Remember me</label>

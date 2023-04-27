@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add stock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+      label{
+        color:red;
+        font-size:20px;
+        font-family: "Times New Roman", Times, serif;
+        font-weight:bold;
+      }
+      body{
+        background-color: white;
+        }
+        
+        input[type=text], input[type=password], .form-select {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: lightgreen;
+          }
+          .main{
+            display:flex;
+          }
+          .remark{
+            margin:0px 130px;
+          }
+          .header{
+            color:black;
+            margin-bottom:40px;
+            text-align:center;
+          }
+    </style>
+</head>
+<body>
+  <div class="header">
+   <h2> ADD CONSUMABLE & NON CONSUMABLE STOCKS</h2>
+  </div>
+<div class="container main col-12">
+
+<div class="container col-6">
+<form action="/donor" method="POST">
+  <label>STOCK TYPE :</label>
+  <select class="form-select">
+    <option>CONSUMABLE STOCK</option>
+    <option>NON-CONSUMABLE STOCK</option>
+  </select>
+  <br>
+  <br>
+<label> PRODUCT_ID: </label>
+<input type="text" name="name" size="40"/><br><br>
+<label> BILL_INVOICE_NO : </label>     
+<input type="text" name="age" size="40"/><br><br>
+<label> EQUIPMENT :  </label>   
+<input type="text" name="age" size="40"/><br><br>  
+<label>COST/UNIT : </label>   
+<input type="text" name="age" size="40"/><br><br>   
+<label>SUPPLIER_NAME : </label>         
+<input type="text" name="contactnumber" size="40"/><br><br> 
+<label>WARRANTY_PERIOD : </label>         
+<input type="text" name="alternativenumber" size="40"/><br><br>      
+<label>CONDITION : </label>         
+<input type="text" name="whatsappnumber" size="40"/><br><br>   
+</div>
+<div class="container col-6">
+<label>DATE_OF_PURCHASE :</label>
+<input type="text" class="form-control" name="location"><br><br>
+<label>BILL_DATE : </label>         
+<input type="text" name="address" size="40"/><br><br>
+<label>NO_0F_QUANTITY : </label>
+<input type="text" name="age" size="40"/><br><br>
+<label> TOTAL_COST : </label>
+<input type="text" name="age" size="40"/><br><br>
+<label> WARRANTY : </label>         
+<input type="text" name="occupation" size="40" name="occupation"/><br><br>
+<label> TOTAL_STOCK :   </label>   
+<input type="text" name="age" size="40"/><br><br>    
+<label> LOCATED_AT :  </label>   
+<input type="text" name="age" size="40"/><br><br>  
+<label> TRANSFER_HISTORY : </label>         
+<input type="text" name="email" size="40"/><br><br>  
+</form> 
+</div> 
+</div> 
+<div class="remark">
+<label>REMARKS: </label> 
+<textarea class="form-control"rows="3" name="comments">Enter Remarks here...</textarea> 
+<br>
+<br>
+</div>
+<center><input type="submit" value ="ADD STOCK"></center>
+<br>
+<br>
+</body>
+</html>
