@@ -38,12 +38,9 @@
       <h2>CONSUMABLE STOCKS</h2>
     </div>
     <div class="table">
-      <table
-        class="table table-striped table-dark table-hover table-bordered table-responsive"
-      >
+      <table class="table table-striped table-dark table-hover table-bordered table-responsive">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">P.O</th>
             <th scope="col">DATE_OF_PURCHASE</th>
             <th scope="col">BILL_INVOICE_NO</th>
@@ -64,23 +61,24 @@
         </thead>
         <tbody>
           <tr>
-            <td>01</td>
-            <td>PO001</td>
-            <td>12-01-2023</td>
-            <td>2023/INV/0001</td>
-            <td>12-01-2023</td>
-            <td>A4-PAPER</td>
-            <td>4 BUNDLE</td>
-            <td>120</td>
-            <td>480</td>
-            <td>A@A STATIONARIES</td>
-            <td>NILL</td>
-            <td>NILL</td>
-            <td>20 BUNDLE</td>
-            <td>NILL</td>
-            <td>NILL</td>
-            <td>NILL</td>
-            <td>NILL</td>
+            {% for query in query %}
+            <td>{{query.PRODUCT_ID}}</td>
+            <td>{{query.DATE_OF_PURCHASE}}</td>
+            <td>{{query.BILL_INVOICE_NO}}</td>
+            <td>{{query.BILL_DATE}}</td>
+            <td>{{query.EQUIPMENT}}</td>
+            <td>{{query.NO_OF_QUANTITY}}</td>
+            <td>{{query.COST_PER_UNIT}}</td>
+            <td>{{query.TOTAL_COST}}</td>
+            <td>{{query.SUPPLIER_NAME}}</td>
+            <td>{{query.WARRANTY}}</td>
+            <td>{{query.WARRANTY_PERIOD}}</td>
+            <td>{{query.TOTAL_STOCK}}</td>
+            <td>{{query.CONDITION}}</td>
+            <td>{{query.LOCATED_AT}}</td>
+            <td>{{query.TRANSFER_HISTORY}}</td>
+            <td>{{query.REMARKS}}</td>
+            {% endfor %}
           </tr>
         </tbody>
       </table>

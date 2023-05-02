@@ -13,21 +13,21 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">FACULTY PORTAL</a>
+      <a class="navbar-brand">FACULTY PORTAL</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/studentdetails">STUDENT DETAILS</a></li>
       <li><a href="#">ADD NEW STUDENT</a></li>
       <li><a href="/update">UPDATE</a></li>
-        </ul>
-      </li>
-    </ul>
+      <li><a  class="btn" href="{{url_for('home')}}">LOGOUT</a></li>
+      </ul>
     <form class="navbar-form navbar-left" action="/search" method="post">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search" name="roll">
+        <input type="text" class="form-control" placeholder="enter the student" name="roll">
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
+   
   </div>
 </nav>
 

@@ -105,6 +105,24 @@ class year(db.Model):
     NO_OF_ARREARS = db.Column(db.Integer) 
     PLACEMENT_STATUS = db.Column(db.String(100))
 
+class consumable_product(db.Model):
+    PRODUCT_ID = db.Column(db.Integer, primary_key=True)
+    DATE_OF_PURCHASE = db.Column(db.String(100)) 
+    BILL_INVOICE_NO = db.Column(db.String(100)) 
+    BILL_DATE = db.Column(db.String(100)) 
+    EQUIPMENT = db.Column(db.String(100)) 
+    NO_OF_QUANTITY =  db.Column(db.Integer) 
+    COST_PER_UNIT =  db.Column(db.Integer)  
+    TOTAL_COST =  db.Column(db.Integer) 
+    SUPPLIER_NAME  = db.Column(db.String(100)) 
+    WARRANTY = db.Column(db.String(100)) 
+    WARRANTY_PERIOD =db.Column(db.String(100)) 
+    TOTAL_STOCK = db.Column(db.Integer) 
+    CONDITION = db.Column(db.String(2000)) 
+    LOCATION = db.Column(db.String(2000)) 
+    TRANSFER_HISTORY = db.Column(db.String(2000)) 
+    REMARKS = db.Column(db.String(2000)) 
+
 
 @app.route('/')
 def home():
@@ -115,9 +133,7 @@ def stock():
 @app.route('/stockadmin')
 def stockadmin():
     return render_template("stockadmin.html")
-@app.route('/consumable')
-def consumable():
-    return render_template("consumable.html")
+
 @app.route('/addstock')
 def addstock():
     return render_template("addstock.html")
@@ -216,7 +232,6 @@ def edit(ROLL_NO):
 #view all student details of their department
 @app.route('/studentdetails')
 def studentdetails():
-    # query=db.engine.execute(f"SELECT * FROM `student`") 
     query=year.query.all() 
     return render_template('studentdetails.html',query=query)
 
@@ -231,11 +246,65 @@ def update():
 @app.route('/updatearrear', methods=['GET', 'POST'])
 def updatearrear():
     regnum=request.form['regnum']
+    post = year.query.filter_by(ROLL_NO=regnum).first()
     if request.method == 'POST':
-        year.regnum.NO_OF_ARREARS = request.form['arrear']
+        post.NO_OF_ARREARS = request.form['arrear']
         db.session.commit()
         flash('Year record updated successfully!', 'success')
     return render_template('update.html', post=post)
+
+#update placement
+@app.route('/updateplacement', methods=['GET', 'POST'])
+def updateplacement():
+    regnum=request.form['regnum']
+    post = year.query.filter_by(ROLL_NO=regnum).first()
+    if request.method == 'POST':
+        post.PLACEMENT_STATUS = request.form['placement']
+        db.session.commit()
+        flash('Year record updated successfully!', 'success')
+    return render_template('update.html', post=post)
+
+
+#consumable stock view
+
+@app.route('/consumable')
+def consumable():
+    query = consumable_product.query.all()
+    return render_template("consumable.html",query=query)
+
+
+#add consumable product
+@app.route('/add', methods=['GET', 'POST'])
+def add_product():
+    if request.method == 'POST':
+        # retrieve form data from request object
+        date_of_purchase = request.form['date_of_purchase']
+        bill_invoice_no = request.form['bill_invoice_no']
+        bill_date = request.form['bill_date']
+        equipment = request.form['equipment']
+        no_of_quantity = int(request.form['no_of_quantity'])
+        cost_per_unit = int(request.form['cost_per_unit'])
+        total_cost = no_of_quantity * cost_per_unit
+        supplier_name = request.form['supplier_name']
+        warranty = request.form['warranty']
+        warranty_period = request.form['warranty_period']
+        total_stock = int(request.form['total_stock'])
+        condition = request.form['condition']
+        location = request.form['location']
+        transfer_history = request.form['transfer_history']
+        remarks = request.form['remarks']
+        
+        # create new consumable product object
+        new_product = consumable_product(DATE_OF_PURCHASE=date_of_purchase, BILL_INVOICE_NO=bill_invoice_no, BILL_DATE=bill_date,
+                                          EQUIPMENT=equipment, NO_OF_QUANTITY=no_of_quantity, COST_PER_UNIT=cost_per_unit,
+                                          TOTAL_COST=total_cost, SUPPLIER_NAME=supplier_name, WARRANTY=warranty, WARRANTY_PERIOD=warranty_period,
+                                          TOTAL_STOCK=total_stock, CONDITION=condition, LOCATION=location,
+                                          TRANSFER_HISTORY=transfer_history, REMARKS=remarks)
+        
+        # add the new product to the database session and commit the changes
+        db.session.add(new_product)
+        db.session.commit()
+
 
 
 if __name__ == '__main__':
