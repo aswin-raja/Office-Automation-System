@@ -45,55 +45,61 @@
 <div class="container col-6">
 <form action="/add" method="POST">
   <label>STOCK TYPE :</label>
-  <select class="form-select">
-    <option>CONSUMABLE STOCK</option>
-    <option>NON-CONSUMABLE STOCK</option>
+  <select class="form-select" name ="stock_type">
+    <option value="CONSUMABLE">CONSUMABLE STOCK</option>
+    <option value="NON_CONSUMABLE">NON-CONSUMABLE STOCK</option>
+  </select>
+  <br>
+  <br>
+  <label>DEPARTMENT:</label>
+  <select class="form-select" name ="department">
+    <option value="ADMIN">ADMIN</option>
+    <option value="CIVIL">CIVIL</option>
+    <option value="MECH">MECH</option>
+    <option value="EEE">EEE</option>
+    <option value="ECE">ECE</option>
+    <option value="CSE">CSE</option>
+    <option value="IT">IT</option>
   </select>
   <br>
   <br>
 <label> PRODUCT_ID: </label>
-<input type="text" name="name" size="40"/><br><br>
+<input type="text" name="product_id" size="40"/><br><br>
 <label> BILL_INVOICE_NO : </label>     
-<input type="text" name="age" size="40"/><br><br>
+<input type="text" name="bill_invoice_no" size="40"/><br><br>
 <label> EQUIPMENT :  </label>   
-<input type="text" name="age" size="40"/><br><br>  
-<label>COST/UNIT : </label>   
-<input type="text" name="age" size="40"/><br><br>   
+<input type="text" name="equipment" size="40"/><br><br>  
+<label>COST_PER_UNIT : </label>   
+<input type="text" name="cost_per_unit" size="40"/><br><br>   
 <label>SUPPLIER_NAME : </label>         
-<input type="text" name="contactnumber" size="40"/><br><br> 
+<input type="text" name="supplier_name" size="40"/><br><br> 
 <label>WARRANTY_PERIOD : </label>         
-<input type="text" name="alternativenumber" size="40"/><br><br>      
+<input type="text" name="warranty_period" size="40"/><br><br>      
 <label>CONDITION : </label>         
-<input type="text" name="whatsappnumber" size="40"/><br><br>   
+<input type="text" name="condition" size="40"/><br><br>   
 </div>
 <div class="container col-6">
 <label>DATE_OF_PURCHASE :</label>
-<input type="text" class="form-control" name="location"><br><br>
+<input type="date" class="form-control" name="date_of_purchase"><br><br>
 <label>BILL_DATE : </label>         
-<input type="text" name="address" size="40"/><br><br>
+<input type="text" name="bill_date" size="40"/><br><br>
 <label>NO_0F_QUANTITY : </label>
-<input type="text" name="age" size="40"/><br><br>
+<input type="text" name="no_of_quantity" size="40"/><br><br>
 <label> TOTAL_COST : </label>
-<input type="text" name="age" size="40"/><br><br>
+<input type="text" name="total_cost" size="40"/><br><br>
 <label> WARRANTY : </label>         
-<input type="text" name="occupation" size="40" name="occupation"/><br><br>
+<input type="text" name="warranty" size="40" name="occupation"/><br><br>
 <label> TOTAL_STOCK :   </label>   
-<input type="text" name="age" size="40"/><br><br>    
+<input type="text" name="total_stock" size="40"/><br><br>    
 <label> LOCATED_AT :  </label>   
-<input type="text" name="age" size="40"/><br><br>  
-<label> TRANSFER_HISTORY : </label>         
-<input type="text" name="email" size="40"/><br><br>  
-</form> 
-</div> 
-</div> 
-<div class="remark">
+<input type="text" name="location" size="40"/><br><br>  
 <label>REMARKS: </label> 
-<textarea class="form-control"rows="3" name="comments">Enter Remarks here...</textarea> 
+<textarea class="form-control"rows="3" name="remarks">Enter Remarks here...</textarea> 
 <br>
 <br>
-</div>
 <center><input type="submit" value ="ADD STOCK"></center>
 <br>
 <br>
+</form>
 </body>
 </html>

@@ -32,16 +32,18 @@
         height: 50px;
       }
     </style>
+
   </head>
   <body>
-    <div class="fixed">
+    <div class="fixed" >
       <h2>CONSUMABLE STOCKS</h2>
     </div>
-    <div class="table">
+    <div class="table" id="print-content">
       <table class="table table-striped table-dark table-hover table-bordered table-responsive">
         <thead>
           <tr>
-            <th scope="col">P.O</th>
+            <th scope="col">SI_NO</th>
+            <th scope="col">PRODUCT_ID</th>
             <th scope="col">DATE_OF_PURCHASE</th>
             <th scope="col">BILL_INVOICE_NO</th>
             <th scope="col">BILL_DATE</th>
@@ -62,6 +64,7 @@
         <tbody>
           <tr>
             {% for query in query %}
+            <td>{{query.SI_NO}}</td>
             <td>{{query.PRODUCT_ID}}</td>
             <td>{{query.DATE_OF_PURCHASE}}</td>
             <td>{{query.BILL_INVOICE_NO}}</td>
@@ -78,13 +81,23 @@
             <td>{{query.LOCATED_AT}}</td>
             <td>{{query.TRANSFER_HISTORY}}</td>
             <td>{{query.REMARKS}}</td>
-            {% endfor %}
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
+    <button onclick="printContent()">Print</button>
     <button type="button" class="btn btn-primary">
       <a class="btn" href="{{url_for('home')}}">Logout</a>
     </button>
+    <script>
+      function printContent() {
+        var printContents = document.getElementById("print-content").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+      }
+    </script>
   </body>
 </html>

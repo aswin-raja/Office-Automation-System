@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Home</title>
-  </head>
-  <a href="{{ url_for('.download_report') }}">Generate Pdf Report</a>
-  </body>
+<head>
+    <title>Bonafide Certificate Generator</title>
+</head>
+<body>
+    <h1>Bonafide Certificate Generator</h1>
+    <form action="/generate_bonafide" method="post">
+        <label for="rollno">Roll No:</label>
+        <input type="text" name="rollno" required><br>
+        <label for="refid">Reference id:</label>
+        <input type="text" name="refid" required><br>
+        <input type="submit" value="Generate Certificate">
+    </form>
+</body>
 </html>
