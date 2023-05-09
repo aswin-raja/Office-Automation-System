@@ -1,11 +1,10 @@
 from flask import Flask,render_template,request,session,redirect,url_for,flash, make_response, send_file
 from flask_sqlalchemy import SQLAlchemy
 from reportlab.lib.pagesizes import A4, portrait
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
-from reportlab.lib.utils import ImageReader
+from reportlab.lib.utils import ImageReader, simpleSplit
 import datetime
 
 app = Flask(__name__)
@@ -367,11 +366,16 @@ def generate_bonafide():
     document.drawString(30, 715, f"Ref : {refid}")
     document.drawString(430, 715, f"Date : {formatted_date}")
     document.drawString(230, 660, "BONAFIDE CERTIFICATE")
-    document.setFont("Times-Roman", 14)
-    document.drawString(80, 630, f"This is to certify that {salutation} {name}, (Reg. No: {rollno})")
-    document.drawString(30, 610, f"S/o. Mr. {father_name} & Mrs. {mother_name} is a bonafide student of")
-    document.drawString(30, 590, f"University College of Engineering, Nagercoil. {pronoun} Studies {year} Year {degree} in the Department of ")
-    document.drawString(30, 570, f"{department} during the academic year {current_year} - {next_year} ")
+    
+    
+    # Define the text for the certificate
+    document.setFont("Times-Roman", 13)
+    text = simpleSplit(f"   This is to certify that {salutation} {name}, (Reg. No: {rollno}). S/o. Mr. {father_name} & Mrs. {mother_name} is a bonafide student of University College of Engineering, Nagercoil. {pronoun} Studies {year} Year {degree} in the Department of {department} during the academic year {current_year} - {next_year}.", fontSize = 14, maxWidth = 7.5*inch, fontName='Times-Roman')
+    # Add the content
+    y = 8.7*inch
+    for line in text:
+        document.drawString(30, y, line)
+        y -= 0.25*inch
     
     # Save the PDF document
     document.showPage()

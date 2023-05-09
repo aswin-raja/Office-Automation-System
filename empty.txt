@@ -1,0 +1,62 @@
+def generate_bonafide():
+    # Get the user's input from the HTML form
+    rollno = request.form['rollno']
+    post = student.query.filter_by(ROLL_NO=rollno).first()
+    name = post.NAME
+    refid = request.form['refid']
+    date = datetime.date.today()
+    formatted_date = date.strftime("%d-%m-%Y")
+    gender = post.GENDER
+    if gender == 'MALE':
+        salutation = 'Mr.'
+        pronoun = 'He'
+    else:
+        salutation = 'Mrs.'
+        pronoun = 'She'
+
+    father_name = post.FATHER_NAME
+    mother_name = post.MOTHER_NAME
+    year = post.YEAR
+    degree = post.DEGREE
+    department = post.BRANCH
+    current_year = datetime.datetime.now().year
+    next_year = current_year + 1
+
+    # Create a new PDF document
+    filename = f"{name}_bonafide.pdf"
+    document = canvas.Canvas(filename, pagesize=A4)
+
+    # Set the font and font size
+    document.setFont("Times-Bold", 14)
+    
+    logo_path = 'static/aulogo.png'
+    logo = ImageReader(logo_path)
+    document.drawImage(logo, 30, 780, width=50, height=50)
+
+    # Add the content
+    document.drawString(130, 810, "UNIVERSITY COLLEGE OF ENGINEERING, NAGERCOIL")
+    document.drawString(160, 790, "(A Constituent College Of Anna University, Chennai)")
+    document.drawString(0, 770, "______________________________________________________________________________________________________")
+    document.drawString(30, 755, "Dr. V.A. Nagarajan")
+    document.drawString(30, 740, "DEAN")
+    document.drawString(410, 755, "Phone: 04652-260510")
+    document.drawString(410, 740, "E-Mail: deanucen@gmail.com")
+    document.drawString(0, 735, "______________________________________________________________________________________________________")
+    document.drawString(30, 715, f"Ref : {refid}")
+    document.drawString(430, 715, f"Date : {formatted_date}")
+    document.drawString(230, 660, "BONAFIDE CERTIFICATE")
+    document.setFont("Times-Roman", 14)
+    document.drawString(80, 630, f"This is to certify that {salutation} {name}, (Reg. No: {rollno})")
+    document.drawString(30, 610, f"S/o. Mr. {father_name} & Mrs. {mother_name} is a bonafide student of")
+    document.drawString(30, 590, f"University College of Engineering, Nagercoil. {pronoun} Studies {year} Year {degree} in the Department of ")
+    document.drawString(30, 570, f"{department} during the academic year {current_year} - {next_year} ")
+    
+    # Save the PDF document
+    document.showPage()
+    document.save()
+
+    # Serve the PDF document as a response to the user
+    response = make_response(open(filename, 'rb').read())
+    response.headers.set('Content-Type', 'application/pdf')
+    response.headers.set('Content-Disposition', 'attachment', filename=filename)
+    return response
