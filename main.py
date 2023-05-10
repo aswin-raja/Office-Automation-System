@@ -110,10 +110,9 @@ class student(db.Model):
     PLACEMENT_STATUS = db.Column(db.String(100))
 
 class stock_management(db.Model):
-    SI_NO = db.Column(db.Integer, primary_key=True)
     STOCK_TYPE = db.Column(db.String(100)) 
     DEPARTMENT = db.Column(db.String(100)) 
-    PRODUCT_ID = db.Column(db.Integer)
+    PRODUCT_ID = db.Column(db.Integer, primary_key=True)
     DATE_OF_PURCHASE = db.Column(db.String(100)) 
     BILL_INVOICE_NO = db.Column(db.String(100)) 
     BILL_DATE = db.Column(db.String(100)) 
@@ -134,19 +133,12 @@ class stock_management(db.Model):
 @app.route('/')
 def home():
     return render_template("login.html")
-@app.route('/stock')
-def stock():
-    return render_template("stock.html")
-@app.route('/stockadmin')
-def stockadmin():
-    return render_template("stockadmin.html")
-
+@app.route('/addstudent')
+def addstudent():
+    return render_template("addstudent.html")
 @app.route('/addstock')
 def addstock():
     return render_template("addstock.html")
-@app.route('/nonconsumable')
-def nonconsumable():
-    return render_template("nonconsumable.html")
 
 #admin credentials
 admindata = {'stock@ucen': '123',
@@ -201,16 +193,19 @@ def faculty_login():
                 
     else: 
         if name in facultydata:
-         return render_template('admin.html')
+            if name == 'it@ucen':
+                department = "INFORMATION TECHNOLOGY"
+            query = student.query.filter_by(BRANCH=department).all()
+            return render_template('admin.html',query=query)
          
 #student authentication & their profile view
 @app.route('/student_login', methods=['POST', 'GET'])
 def student_login():
     name = request.form['studentusername']
     pwd = request.form['studentpassword']
-    student = student.query.filter_by(ROLL_NO=name, DOB_YYYY_MM_DD=pwd).first()
+    user = student.query.filter_by(ROLL_NO=name, DOB_YYYY_MM_DD=pwd).first()
     
-    if student:
+    if user:
       query = student.query.filter_by(ROLL_NO=name).first()      
       return render_template('studentprofileview.html',query=query)
     else:
@@ -222,7 +217,7 @@ def student_login():
 def search_student():
   reg = request.form['roll']
   search=student.query.filter_by(ROLL_NO=reg).first()
-  return render_template('admin.html',search=search)
+  return render_template('studprofile.html',query=search)
 
 #edit student details by faculties
 @app.route('/edit/<int:ROLL_NO>', methods=['GET', 'POST'])
@@ -240,7 +235,8 @@ def edit(ROLL_NO):
 #view all student details of their department
 @app.route('/studentdetails')
 def studentdetails():
-    query=student.query.all() 
+    department = request.form['department']
+    query = student.query.filter_by(DEPARTMENT=department).all()
     return render_template('studentdetails.html',query=query)
 
 
@@ -277,8 +273,16 @@ def updateplacement():
 
 @app.route('/consumable')
 def consumable():
-    query = stock_management.query.all()
+    query = stock_management.query.filter_by(STOCK_TYPE='CONSUMABLE').all()
     return render_template("consumable.html",query=query)
+
+
+#non-consumable stock view
+
+@app.route('/nonconsumable')
+def nonconsumable():
+    query = stock_management.query.filter_by(STOCK_TYPE='NON_CONSUMABLE').all()
+    return render_template("nonconsumable.html",query=query)
 
 
 #add consumable product
@@ -286,7 +290,6 @@ def consumable():
 def add_product():
     if request.method == 'POST':
         # retrieve form data from request object
-        si_no = max(stock_management.SI_NO) +1
         stock_type = request.form['stock_type']
         department = request.form['department']
         product_id = request.form['product_id']
@@ -309,13 +312,26 @@ def add_product():
         new_product = stock_management(SI_NO=si_no,STOCK_TYPE=stock_type,DEPARTMENT=department,PRODUCT_ID=product_id,DATE_OF_PURCHASE=date_of_purchase, BILL_INVOICE_NO=bill_invoice_no, BILL_DATE=bill_date,
                                           EQUIPMENT=equipment, NO_OF_QUANTITY=no_of_quantity, COST_PER_UNIT=cost_per_unit,
                                           TOTAL_COST=total_cost, SUPPLIER_NAME=supplier_name, WARRANTY=warranty, WARRANTY_PERIOD=warranty_period,
-                                          TOTAL_STOCK=total_stock, CONDITION=condition, LOCATION=location, REMARKS=remarks)
+                                          TOTAL_STOCK=total_stock, CONDITION=condition, LOCATION=location,TRANSFER_HISTORY=location, REMARKS=remarks)
         
         # add the new product to the database session and commit the changes
         db.session.add(new_product)
         db.session.commit()
         return render_template("addstock.html")
-    
+
+
+#update stock details by admin
+@app.route('/updatestock/<string:PRODUCT_ID>', methods=['GET', 'POST'])
+def updatestock(PRODUCT_ID):
+    post = stock_management.query.filter_by(PRODUCT_ID=PRODUCT_ID).first()
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if request.method =='POST':
+        old_history = post.TRANSFER_HISTORY
+        new_location = request.form['transferhistory']
+        new_history = old_history + '\n' + '(' + current_time + ': ' + new_location +') ,'
+        post.TRANSFER_HISTORY = new_history
+    db.session.commit()
+    return render_template('stockupdate.html',post=post)  
     
 #bonafide generation
 @app.route('/generate_bonafide', methods=['POST'])
@@ -325,15 +341,18 @@ def generate_bonafide():
     post = student.query.filter_by(ROLL_NO=rollno).first()
     name = post.NAME
     refid = request.form['refid']
+    reason = request.form['reason']
     date = datetime.date.today()
     formatted_date = date.strftime("%d-%m-%Y")
     gender = post.GENDER
     if gender == 'MALE':
         salutation = 'Mr.'
         pronoun = 'He'
+        noun = 'his'
     else:
         salutation = 'Mrs.'
         pronoun = 'She'
+        noun = 'her'
 
     father_name = post.FATHER_NAME
     mother_name = post.MOTHER_NAME
@@ -370,9 +389,17 @@ def generate_bonafide():
     
     # Define the text for the certificate
     document.setFont("Times-Roman", 13)
-    text = simpleSplit(f"   This is to certify that {salutation} {name}, (Reg. No: {rollno}). S/o. Mr. {father_name} & Mrs. {mother_name} is a bonafide student of University College of Engineering, Nagercoil. {pronoun} Studies {year} Year {degree} in the Department of {department} during the academic year {current_year} - {next_year}.", fontSize = 14, maxWidth = 7.5*inch, fontName='Times-Roman')
+    text = simpleSplit(f"This is to certify that {salutation} {name}, (Reg. No: {rollno}). S/o. Mr. {father_name} & Mrs. {mother_name} is a bonafide student of University College of Engineering, Nagercoil. {pronoun} Studies {year} Year {degree} in the Department of {department} during the academic year {current_year} - {next_year}.", fontSize = 14, maxWidth = 7.5*inch, fontName='Times-Roman')
     # Add the content
     y = 8.7*inch
+    for line in text:
+        document.drawString(30, y, line)
+        y -= 0.25*inch
+        
+    document.setFont("Times-Roman", 13)
+    text = simpleSplit(f"This certificate is issued on {noun} own request for {reason} .", fontSize = 14, maxWidth = 7.5*inch, fontName='Times-Roman')
+    # Add the content
+    y = 7.5*inch
     for line in text:
         document.drawString(30, y, line)
         y -= 0.25*inch

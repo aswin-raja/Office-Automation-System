@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Faculty Panel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -16,8 +16,6 @@
       <a class="navbar-brand">FACULTY PORTAL</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/studentdetails">STUDENT DETAILS</a></li>
-      <li><a href="#">ADD NEW STUDENT</a></li>
       <li><a href="/update">UPDATE</a></li>
       <li><a  class="btn" href="{{url_for('home')}}">LOGOUT</a></li>
       </ul>
@@ -26,21 +24,53 @@
         <input type="text" class="form-control" placeholder="enter the student" name="roll">
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-   
+      <button type="button" onclick="printContent()" class="btn btn-primary">
+        Print
+        </button>
   </div>
+
 </nav>
+<div class="table" id="print-content">
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">S_ID</th>
+      <th scope="col">ROLL NUMBER</th>
+      <th scope="col">STUDENT NAME</th>
+      <th scope="col">SEM</th>
+      <th scope="col">GENDER</th>
+      <th scope="col">BRANCH</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">NUMBER</th>
+      <th scope="col">ADDRESS</th>
 
-<div class="container">
-    {% if search %}
-          <tr>
-            <td>{{search.ROLL_NO}}</td>
-            <td>{{search.NAME}}</td>
-            <td><a href="/edit/{{search.ROLL_NO}}"><button class="btn btn-primary">Edit </button> </a></td>
-        </tr>
-        {% endif %}
-          
+    </tr>
+  </thead>
+  <tbody>
+  {% for post in query %}
+    <tr>
+      <td>{{post.APPL_NO}}</td>
+      <td>{{post.NAME}}</td>
+      <td>{{post.name}}</td>
+      <td>{{post.gender}}</td>
+      <td>{{post.branch}}</td>
+      <td>{{post.email}}</td>
+      <td>{{post.number}}</td>
+      <td>{{post.address}}</td>
+    </tr>
+{% endfor %}
+  
+  </tbody>
+</table>
 </div>
-
+<script>
+  function printContent() {
+    var printContents = document.getElementById("print-content").innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  }
+</script>
 </body>
 </html>

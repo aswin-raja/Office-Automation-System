@@ -15,7 +15,7 @@
         background-color: white;
         }
         
-        input[type=text], input[type=password], .form-select {
+        input[type=text], input[type=number], input[type=password], input[type=date], .form-select {
             width: 100%;
             padding: 15px;
             margin: 5px 0 22px 0;
@@ -23,6 +23,7 @@
             border: none;
             background: lightgreen;
           }
+          
           .main{
             display:flex;
           }
@@ -70,7 +71,7 @@
 <label> EQUIPMENT :  </label>   
 <input type="text" name="equipment" size="40"/><br><br>  
 <label>COST_PER_UNIT : </label>   
-<input type="text" name="cost_per_unit" size="40"/><br><br>   
+<input  type="number" id="cost_per_unit" name="cost_per_unit" onchange="calculateTotal()" size="40"/><br><br>   
 <label>SUPPLIER_NAME : </label>         
 <input type="text" name="supplier_name" size="40"/><br><br> 
 <label>WARRANTY_PERIOD : </label>         
@@ -84,9 +85,9 @@
 <label>BILL_DATE : </label>         
 <input type="text" name="bill_date" size="40"/><br><br>
 <label>NO_0F_QUANTITY : </label>
-<input type="text" name="no_of_quantity" size="40"/><br><br>
+<input type="number" id="no_of_quantity" name="no_of_quantity" onchange="calculateTotal()" size="40"/><br><br>
 <label> TOTAL_COST : </label>
-<input type="text" name="total_cost" size="40"/><br><br>
+<input type="number" id="total_cost" name="total_cost" value="0" readonly size="40"/><br><br>
 <label> WARRANTY : </label>         
 <input type="text" name="warranty" size="40" name="occupation"/><br><br>
 <label> TOTAL_STOCK :   </label>   
@@ -101,5 +102,13 @@
 <br>
 <br>
 </form>
+<script>
+  function calculateTotal() {
+    const no_of_quantity = document.getElementById("no_of_quantity").value;
+    const cost_per_unit = document.getElementById("cost_per_unit").value;
+    const total_cost = no_of_quantity * cost_per_unit;
+    document.getElementById("total_cost").value = total_cost;
+  }
+</script>
 </body>
 </html>

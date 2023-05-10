@@ -40,14 +40,14 @@
     <div class="card text-center"  style="width: 18rem;">
       <img src="{{url_for('static', filename='view.png')}}" class="card-img-top" alt="admin_icon">
       <div class="card-body">
-        <a href="{{url_for('nonconsumable')}}"class="btn btn-primary">NON-CONSUMABLE STOCKS</a>
+        <a href="/nonconsumable"class="btn btn-primary">NON-CONSUMABLE STOCKS</a>
       </div>
     </div>
-    <div class="card text-center"  style="width: 18rem;">
-      <img src="{{url_for('static', filename='admin.png')}}"  class="card-img-top" alt="admin_icon">
-      <div class="card-body">
-        <a href="{{url_for('stockadmin')}}" class="btn btn-primary">ADMIN PANEL</a>
-      </div>
+      <div class="card text-center"  style="width: 18rem;">
+        <img src="{{url_for('static', filename='add.png')}}" class="card-img-top" alt="admin_icon">
+        <div class="card-body">
+          <a href="{{url_for('addstock')}}" class="btn btn-primary">ADD STOCKS</a>
+        </div>
     </div>
   </div>
   </body>
