@@ -6,35 +6,38 @@
   </head>
   <body>
     <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">APPL_NO</th>
-            <th scope="col">ROLL NUMBER</th>
-            <th scope="col">STUDENT NAME</th>
-            <th scope="col">SEM</th>
-            <th scope="col">GENDER</th>
-            <th scope="col">BRANCH</th>
-            <th scope="col">EMAIL</th>
-            <th scope="col">NUMBER</th>
-            <th scope="col">ADDRESS</th>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">APPL_NO</th>
+          <th scope="col">ROLL NUMBER</th>
+          <th scope="col">STUDENT NAME</th>
+          <th scope="col">YEAR</th>
+          <th scope="col">GENDER</th>
+          <th scope="col">BRANCH</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">MOBILE</th>
+          <th scope="col">ADDRESS</th>
+          <th scope="col">FATHER_MOBILE</th>
+    
+        </tr>
+      </thead>
+      <tbody>
+      {% for post in post %}
+        <tr>
+          <td>{{post.APPL_NO}}</td>
+          <td>{{post.ROLL_NO}}</td>
+          <td>{{post.NAME}}</td>
+          <td>{{post.YEAR}}</td>
+          <td>{{post.GENDER}}</td>
+          <td>{{post.BRANCH}}</td>
+          <td>{{post.E_MAIL}}</td>
+          <td>{{post.MOBILE}}</td>
+          <td>{{post.DISTRICT_1}}</td>
+          <td>{{post.FATHER_MOBILE}}</td>
+        </tr>
+    {% endfor %}
       
-          </tr>
-        </thead>
-        <tbody>
-        {% for post in post %}
-          <tr>
-            <td>{{post.APPL_NO}}</td>
-            <td>{{post.ROLL_NO}}</td>
-            <td>{{post.NAME}}</td>
-            <td>{{post.gender}}</td>
-            <td>{{post.branch}}</td>
-            <td>{{post.email}}</td>
-            <td>{{post.number}}</td>
-            <td>{{post.address}}</td>
-          </tr>
-      {% endfor %}
-        
-        </tbody>
-      </table>
+      </tbody>
+    </table>
   </body>
   </html>
