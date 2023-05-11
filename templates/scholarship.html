@@ -2,43 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>stock management</title>
+    <title>scholarship management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    body{
+      background-color:white;
+    }
+    .flex{
+      display:flex;
+      padding-top:80px;
+      padding-left:100px;
+    }
+    .card{
+      margin-right:150px;
+    }
+    button{
+      tex-align:center;
+      margin-top:70px;
+      margin-left:45%; 
+      height:50px;   
+    }
+    h2{
+      text-align:center;  
+      margin-top:10px;
+    }
+  </style>
   </head>
   <body>
-    <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">S_ID</th>
-            <th scope="col">ROLL NUMBER</th>
-            <th scope="col">STUDENT NAME</th>
-            <th scope="col">SEM</th>
-            <th scope="col">GENDER</th>
-            <th scope="col">BRANCH</th>
-            <th scope="col">EMAIL</th>
-            <th scope="col">NUMBER</th>
-            <th scope="col">ADDRESS</th>
-            <th scope="col">EDIT</th>
-            <th scope="col">DELETE</th>
-      
-          </tr>
-        </thead>
-        <tbody>
-        {% for post in query %}
-          <tr>
-            <td>{{post.APPL_NO}}</td>
-            <td>{{post.NAME}}</td>
-            <td>{{post.sem}}</td>
-            <td>{{post.gender}}</td>
-            <td>{{post.branch}}</td>
-            <td>{{post.email}}</td>
-            <td>{{post.number}}</td>
-            <td>{{post.address}}</td>
-          <td><a href="/edit/{{post.id}}"><button class="btn btn-primary">Edit </button> </a> </td>
-          <td><a href="/delete/{{post.id}}"><button onclick="return confirm('Are you sure to Delete data');" class="btn btn-danger">Delete </button> </a> </td>
-          </tr>
-      {% endfor %}
-        
-        </tbody>
-      </table>
+    <h2>SCHOLARSHIP MANAGEMENT</h2>
+   <div class="flex">
+    <div class="card text-center"  style="width: 18rem;">
+      <img src="{{url_for('static', filename='sview.png')}}" class="card-img-top" alt="admin_icon">
+      <div class="card-body">
+        <a href="/bcscholarship" class="btn btn-primary">BC  SCHOLARSHIP</a>
+      </div>
+    </div>
+    <div class="card text-center"  style="width: 18rem;">
+      <img src="{{url_for('static', filename='sview.png')}}" class="card-img-top" alt="admin_icon">
+      <div class="card-body">
+        <a href="/scscholarship"class="btn btn-primary">SC/ST SCHOLARSHIP</a>
+      </div>
+    </div>
+      <div class="card text-center"  style="width: 18rem;">
+        <img src="{{url_for('static', filename='sview.png')}}" class="card-img-top" alt="admin_icon">
+        <div class="card-body">
+          <a href="/nationalscholarship" class="btn btn-primary">NATIONAL SCHOLARSHIP</a>
+        </div>
+    </div>
+    <div class="card text-center"  style="width: 18rem;">
+      <img src="{{url_for('static', filename='sview.png')}}" class="card-img-top" alt="admin_icon">
+      <div class="card-body">
+        <a href="/moovalurscholarship" class="btn btn-primary">MOOVALUR SCHOLARSHIP</a>
+      </div>
+  </div>
+  </div>
   </body>
-  </html>
+  <button type="button" class="btn btn-primary"><a  class="btn" href="{{url_for('home')}}">Logout</a></button>
+
+</body>
+</html>

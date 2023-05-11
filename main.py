@@ -195,19 +195,41 @@ def faculty_login():
         if name in facultydata:
             if name == 'it@ucen':
                 department = "INFORMATION TECHNOLOGY"
-            query = student.query.filter_by(BRANCH=department).all()
-            return render_template('admin.html',query=query)
-         
+                query = student.query.filter_by(BRANCH=department).all()
+                return render_template('admin.html',query=query)
+            elif name == 'cse@ucen':
+                department = "COMPUTER SCIENCE ENGINEERING"
+                query = student.query.filter_by(BRANCH=department).all()
+                return render_template('admin.html',query=query)
+            elif name == 'ece@ucen':
+                department = "ELECTRONICS AND COMMUNICATION ENGINEERING"
+                query = student.query.filter_by(BRANCH=department).all()
+                return render_template('admin.html',query=query)
+            elif name == 'eee@ucen':
+                department = "ELECTRICAL AND ELECTRONICS ENGINEERING"
+                query = student.query.filter_by(BRANCH=department).all()
+                return render_template('admin.html',query=query)
+            elif name == 'civil@ucen':
+                department = "CIVIL ENGINEERING"
+                query = student.query.filter_by(BRANCH=department).all()
+                return render_template('admin.html',query=query)
+            elif name == 'mech@ucen':
+                department = "MECHANICAL ENGINEERING"
+                query = student.query.filter_by(BRANCH=department).all()
+                return render_template('admin.html',query=query)
+                
+                
 #student authentication & their profile view
 @app.route('/student_login', methods=['POST', 'GET'])
 def student_login():
     name = request.form['studentusername']
     pwd = request.form['studentpassword']
+    currentyear = datetime.datetime.now().year
     user = student.query.filter_by(ROLL_NO=name, DOB_YYYY_MM_DD=pwd).first()
     
     if user:
       query = student.query.filter_by(ROLL_NO=name).first()      
-      return render_template('studentprofileview.html',query=query)
+      return render_template('studentprofileview.html',query=query,currentyear=currentyear )
     else:
        return render_template('login.html')
    
@@ -217,7 +239,8 @@ def student_login():
 def search_student():
   reg = request.form['roll']
   search=student.query.filter_by(ROLL_NO=reg).first()
-  return render_template('studprofile.html',query=search)
+  currentyear = datetime.datetime.now().year
+  return render_template('studprofile.html',query=search, currentyear=currentyear)
 
 #edit student details by faculties
 @app.route('/edit/<int:ROLL_NO>', methods=['GET', 'POST'])
@@ -228,7 +251,7 @@ def edit(ROLL_NO):
         post.ROLL_NO = request.form['roll_no']
         post.NAME = request.form['name']
         db.session.commit()
-        flash('student record updated successfully!', 'success')
+        
     posts=student.query.filter_by(ROLL_NO=ROLL_NO).first()
     return render_template('edit.html', post=post,posts=posts)
 
@@ -268,6 +291,38 @@ def updateplacement():
         flash('student record updated successfully!', 'success')
     return render_template('update.html', post=post)
 
+#bc scholarship
+@app.route('/bcscholarship')
+def bcscholarship():
+    post = student.query.filter(
+    ((student.COMMUNITY == 'BC') | (student.COMMUNITY == 'MBC')) &
+    (student.ANNUAL_INCOME <= 200000)).all()
+    return render_template("scholarshipview.html", post=post)
+
+#sc scholarship
+@app.route('/scscholarship')
+def scscholarship():
+    post = student.query.filter(
+    ((student.COMMUNITY == 'SC') | (student.COMMUNITY == 'ST')) &
+    (student.ANNUAL_INCOME <= 200000)).all()
+    return render_template("scholarshipview.html", post=post)
+
+#national scholarship
+@app.route('/nationalscholarship')
+def nationalscholarship():
+    post = student.query.filter(
+    ((student.RELIGION == 'CHRISTIANITY') | (student.RELIGION == 'MUSLIM')) &
+    ((student.COMMUNITY == 'BC') | (student.COMMUNITY == 'MBC')) &
+    (student.ANNUAL_INCOME <= 200000)).all()
+    return render_template("scholarshipview.html", post=post)
+
+#moovalur scholarship
+@app.route('/moovalurscholarship')
+def moovalurscholarship():
+    post = student.query.filter(
+    (student.GENDER == 'FEMALE') &
+    (student.ANNUAL_INCOME <= 200000)).all()
+    return render_template("scholarshipview.html", post=post)
 
 #consumable stock view
 

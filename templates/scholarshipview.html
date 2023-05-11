@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>studentdetails</title>
+    <title>scholarshipview</title>
   </head>
   <body>
     <table class="table">
@@ -21,11 +21,11 @@
           </tr>
         </thead>
         <tbody>
-        {% for post in query %}
+        {% for post in post %}
           <tr>
             <td>{{post.APPL_NO}}</td>
+            <td>{{post.ROLL_NO}}</td>
             <td>{{post.NAME}}</td>
-            <td>{{post.sem}}</td>
             <td>{{post.gender}}</td>
             <td>{{post.branch}}</td>
             <td>{{post.email}}</td>
