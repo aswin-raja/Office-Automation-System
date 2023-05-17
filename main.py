@@ -106,6 +106,10 @@ class student(db.Model):
     PROGRAMME   = db.Column(db.String(100)) 
     CAMPCODE    = db.Column(db.String(100)) 
     ADMISSION_DATE_YYYY_MM_DD   = db.Column(db.String(100))
+    PREFERED_SCHOLARSHIP   = db.Column(db.String(100)) 
+    APPLIED_STATUS   = db.Column(db.String(100)) 
+    FIRST_GRADUATE    = db.Column(db.String(100)) 
+    TAMIL_MEDIUM_QUOTA    = db.Column(db.String(100)) 
     NO_OF_ARREARS = db.Column(db.Integer) 
     PLACEMENT_STATUS = db.Column(db.String(100))
 
@@ -218,7 +222,9 @@ def faculty_login():
                 query = student.query.filter_by(BRANCH=department).all()
                 return render_template('admin.html',query=query)
                 
-                
+
+
+
 #student authentication & their profile view
 @app.route('/student_login', methods=['POST', 'GET'])
 def student_login():
@@ -232,7 +238,14 @@ def student_login():
       return render_template('studentprofileview.html',query=query,currentyear=currentyear )
     else:
        return render_template('login.html')
-   
+  
+#viewmore
+@app.route('/viewmore/<int:ROLL_NO>', methods=['GET','POST'])
+def viewmore(ROLL_NO):
+    currentyear = datetime.datetime.now().year
+    search = student.query.filter_by(ROLL_NO=ROLL_NO).first()
+    return render_template('studentprofileview.html', query=search, currentyear=currentyear)
+
 
 #faculty search for a student in nav bar
 @app.route('/search', methods=['POST', 'GET'])
@@ -242,6 +255,8 @@ def search_student():
   currentyear = datetime.datetime.now().year
   return render_template('studprofile.html',query=search, currentyear=currentyear)
 
+
+
 #edit student details by faculties
 @app.route('/edit/<int:ROLL_NO>', methods=['GET', 'POST'])
 def edit(ROLL_NO):
@@ -250,17 +265,13 @@ def edit(ROLL_NO):
         post.APPL_NO = request.form['appl_no']
         post.ROLL_NO = request.form['roll_no']
         post.NAME = request.form['name']
+        #need to update more columns
         db.session.commit()
         
     posts=student.query.filter_by(ROLL_NO=ROLL_NO).first()
     return render_template('edit.html', post=post,posts=posts)
 
-#view all student details of their department
-@app.route('/studentdetails')
-def studentdetails():
-    department = request.form['department']
-    query = student.query.filter_by(DEPARTMENT=department).all()
-    return render_template('studentdetails.html',query=query)
+
 
 
 #route to  updation page from faculty admin page
@@ -291,38 +302,66 @@ def updateplacement():
         flash('student record updated successfully!', 'success')
     return render_template('update.html', post=post)
 
+#update scholarship
+@app.route('/updatescholarship', methods=['GET', 'POST'])
+def updatescholarship():
+    regnum=request.form['regnum']
+    post = student.query.filter_by(ROLL_NO=regnum).first()
+    if request.method == 'POST':
+        post.PREFERED_SCHOLARSHIP = request.form['scholarshiptype']
+        db.session.commit()
+        flash('student record updated successfully!', 'success')
+    return render_template('update.html', post=post)
+
 #bc scholarship
 @app.route('/bcscholarship')
 def bcscholarship():
-    post = student.query.filter(
-    ((student.COMMUNITY == 'BC') | (student.COMMUNITY == 'MBC')) &
-    (student.ANNUAL_INCOME <= 200000)).all()
-    return render_template("scholarshipview.html", post=post)
+    type = 'BC SCHOLARSHIP ELIGIBLE STUDENTS'
+    post = student.query.filter(student.PREFERED_SCHOLARSHIP == 'BC').all()
+    return render_template("scholarshipview.html", post=post, type=type)
 
 #sc scholarship
 @app.route('/scscholarship')
 def scscholarship():
-    post = student.query.filter(
-    ((student.COMMUNITY == 'SC') | (student.COMMUNITY == 'ST')) &
-    (student.ANNUAL_INCOME <= 200000)).all()
-    return render_template("scholarshipview.html", post=post)
+    type = 'SC/ST SCHOLARSHIP ELIGIBLE STUDENTS'
+    post = student.query.filter(student.PREFERED_SCHOLARSHIP == 'SC/ST').all()
+    return render_template("scholarshipview.html", post=post,type=type)
 
 #national scholarship
 @app.route('/nationalscholarship')
 def nationalscholarship():
-    post = student.query.filter(
-    ((student.RELIGION == 'CHRISTIANITY') | (student.RELIGION == 'MUSLIM')) &
-    ((student.COMMUNITY == 'BC') | (student.COMMUNITY == 'MBC')) &
-    (student.ANNUAL_INCOME <= 200000)).all()
-    return render_template("scholarshipview.html", post=post)
+    type = 'NATIONAL SCHOLARSHIP ELIGIBLE STUDENTS'
+    post = student.query.filter(student.PREFERED_SCHOLARSHIP == 'NATIONAL').all()
+    return render_template("scholarshipview.html", post=post,type=type)
 
 #moovalur scholarship
 @app.route('/moovalurscholarship')
 def moovalurscholarship():
-    post = student.query.filter(
-    (student.GENDER == 'FEMALE') &
-    (student.ANNUAL_INCOME <= 200000)).all()
-    return render_template("scholarshipview.html", post=post)
+    type = 'MOOVALUR SCHOLARSHIP ELIGIBLE STUDENTS'
+    post = student.query.filter(student.PREFERED_SCHOLARSHIP == 'MOOVALUR').all()
+    return render_template("scholarshipview.html", post=post,type=type)
+
+#first graduate
+@app.route('/firstgraduate')
+def firstgraduate():
+    type = 'FIRST GRADUATE STUDENTS'
+    post = student.query.filter(student.FIRST_GRADUATE == 'YES').all()
+    return render_template("scholarshipview.html", post=post,type=type)
+
+#7.5% quota scholarship
+@app.route('/tamilmedium')
+def tamilmedium():
+    type = '7.5 QUOTA STUDENTS'
+    post = student.query.filter(student.TAMIL_MEDIUM_QUOTA == 'YES').all()
+    return render_template("scholarshipview.html", post=post,type=type)
+
+#view more studentdetails in scholarship
+@app.route('/morestudentdetails/<int:ROLL_NO>', methods=['GET'])
+def morestudentdetails(ROLL_NO):
+    currentyear = datetime.datetime.now().year
+    query = student.query.filter(student.ROLL_NO == ROLL_NO).first()
+    return render_template("studentprofileview.html",query=query,currentyear=currentyear)
+
 
 #consumable stock view
 
@@ -364,7 +403,7 @@ def add_product():
         remarks = request.form['remarks']
         
         # create new consumable product object
-        new_product = stock_management(SI_NO=si_no,STOCK_TYPE=stock_type,DEPARTMENT=department,PRODUCT_ID=product_id,DATE_OF_PURCHASE=date_of_purchase, BILL_INVOICE_NO=bill_invoice_no, BILL_DATE=bill_date,
+        new_product = stock_management(STOCK_TYPE=stock_type,DEPARTMENT=department,PRODUCT_ID=product_id,DATE_OF_PURCHASE=date_of_purchase, BILL_INVOICE_NO=bill_invoice_no, BILL_DATE=bill_date,
                                           EQUIPMENT=equipment, NO_OF_QUANTITY=no_of_quantity, COST_PER_UNIT=cost_per_unit,
                                           TOTAL_COST=total_cost, SUPPLIER_NAME=supplier_name, WARRANTY=warranty, WARRANTY_PERIOD=warranty_period,
                                           TOTAL_STOCK=total_stock, CONDITION=condition, LOCATION=location,TRANSFER_HISTORY=location, REMARKS=remarks)

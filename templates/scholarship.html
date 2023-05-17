@@ -11,10 +11,10 @@
     .flex{
       display:flex;
       padding-top:80px;
-      padding-left:100px;
+      padding-left:80px;
     }
     .card{
-      margin-right:150px;
+      margin-right:60px;
     }
     button{
       tex-align:center;
@@ -55,7 +55,19 @@
         <a href="/moovalurscholarship" class="btn btn-primary">MOOVALUR SCHOLARSHIP</a>
       </div>
   </div>
+  <div class="card text-center"  style="width: 18rem;">
+    <img src="{{url_for('static', filename='sview.png')}}" class="card-img-top" alt="admin_icon">
+    <div class="card-body">
+      <a href="/firstgraduate" class="btn btn-primary"> FIRST GRADUATE</a>
+    </div>
   </div>
+  <div class="card text-center"  style="width: 18rem;">
+    <img src="{{url_for('static', filename='sview.png')}}" class="card-img-top" alt="admin_icon">
+    <div class="card-body">
+      <a href="/tamilmedium" class="btn btn-primary">7.5% QUOTA STUDENTS</a>
+    </div>
+  </div>
+</div>
   </body>
   <button type="button" class="btn btn-primary"><a  class="btn" href="{{url_for('home')}}">Logout</a></button>
 

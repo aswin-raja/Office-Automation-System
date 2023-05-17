@@ -43,10 +43,16 @@
 @media (min-width: 768px) and (max-width: 1199.98px) { 
     .login{margin-top: 40px;}
 }
+.space{
+    justify-content:space-between;
+    display:flex;
+    align-items:center;
+    margin-left:280px;
+}
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
       <div class="col">
         <div class="login">
@@ -81,6 +87,27 @@
             </form>
            </div>
       </div>
+      <div class="col">
+        <div class="login">
+            <h1 class="text-center">PREFERD SCHOLARSHIP</h1>
+            <form action="/updatescholarship" method="POST">
+                <div class="form-group">
+                   <label class="form-label" for="name">REGISTER NUMBER</label>
+                   <input class="form-control" type="text" name="regnum" placeholder="enter student registernumber">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="scholarshiptype">PREFERED SCHOLARSHIP</label>
+                    <select name="scholarshiptype">
+                        <option value="BC">BC SCHOLARSHIP</option>
+                        <option value="SC/ST">SC/ST SCHOLARSHIP</option>
+                        <option value="NATIONAL">NATIONAL SCHOLARSHIP</option>
+                        <option value="MOOVALUR">MOOVALUR SCHOLARSHIP</option>
+                        <option value="7.5_QUOTA">7.5 QUOTA</option>
+                      </select>
+                 </div>
+                 <input class="btn btn-success w-100" type="submit" value="UPDATE">
+            </form>
+           </div>
     </div>
   </div>
 
