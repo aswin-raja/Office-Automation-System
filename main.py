@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ucenofficeautomation'
 
 #database Configuration
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:@localhost/studentprofile'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:@localhost/officeautomationsystem'
 db=SQLAlchemy(app)
 
 #Table for studnt details
